@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthy Life Family Clinic - Interactive Medical Bookkeeping &amp; Ledger Simulation</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter, Atkinson Hyperlegible, Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --font-scale: 1rem;
+      --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family-base);
+      font-size: var(--font-scale);
+      line-height: 1.6;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+
+    .cert-font-serif {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    /* WCAG Accessible Focus Rings */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    [tabindex="0"]:focus-visible {
+      outline: 3px solid #047857 !important;
+      outline-offset: 3px !important;
+      box-shadow: 0 0 0 5px rgba(4, 120, 87, 0.25) !important;
+    }
+
+    /* High Contrast Mode */
+    .high-contrast-mode {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+    }
+    .high-contrast-mode .bg-white {
+      background-color: #0a0a0a !important;
+      color: #ffffff !important;
+      border-color: #71717a !important;
+    }
+    .high-contrast-mode .bg-slate-50,
+    .high-contrast-mode .bg-slate-100,
+    .high-contrast-mode .bg-emerald-50,
+    .high-contrast-mode .bg-amber-50,
+    .high-contrast-mode .bg-indigo-50 {
+      background-color: #18181b !important;
+      color: #ffffff !important;
+      border-color: #a1a1aa !important;
+    }
+    .high-contrast-mode .text-slate-500,
+    .high-contrast-mode .text-slate-600,
+    .high-contrast-mode .text-slate-700,
+    .high-contrast-mode .text-slate-800,
+    .high-contrast-mode .text-slate-900 {
+      color: #f4f4f5 !important;
+    }
+    .high-contrast-mode .border-slate-200,
+    .high-contrast-mode .border-slate-300 {
+      border-color: #71717a !important;
+    }
+
+    /* Skip link */
+    .skip-to-main {
+      position: absolute;
+      top: -70px;
+      left: 16px;
+      background: #064e3b;
+      color: #ffffff;
+      padding: 12px 24px;
+      font-weight: 700;
+      border-radius: 0 0 8px 8px;
+      z-index: 9999;
+      transition: top 0.2s ease-in-out;
+      text-decoration: none;
+    }
+    .skip-to-main:focus {
+      top: 0;
+      outline: 3px solid #facc15 !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #certificate-printable-section, #certificate-printable-section * {
+        visibility: visible;
+      }
+      #certificate-printable-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50/80 text-slate-900 antialiased min-h-screen flex flex-col transition-colors duration-150">
+
+  <!-- Accessible Skip Navigation Link -->
+  <a href="#main-simulation-content" class="skip-to-main">Skip to main bookkeeping content</a>
+
+  <!-- ARIA Live Announcement Region -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <header class="bg-emerald-950 text-white shadow-sm sticky top-0 z-40 border-b border-emerald-800" role="banner">
+    <!-- Streamlined Accessibility Toolbar -->
+    <div class="bg-emerald-900/90 border-b border-emerald-800/80 px-4 py-1.5 text-xs">
+      <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-2">
+        <span class="text-emerald-200 flex items-center gap-1.5 font-medium">
+          <i class="fa-solid fa-universal-access text-emerald-300" aria-hidden="true"></i>
+          <span>Accessibility</span>
+        </span>
+        <div class="flex items-center gap-2">
+          <div class="inline-flex rounded-lg border border-emerald-700 bg-emerald-950/60 p-0.5" role="group" aria-label="Text Size Controls">
+            <button onclick="adjustFontSize(-1)" aria-label="Decrease text size" class="px-2 py-0.5 rounded text-xs text-emerald-100 hover:bg-emerald-800 font-bold">A-</button>
+            <button onclick="resetFontSize()" aria-label="Reset text size to standard" class="px-2 py-0.5 rounded text-xs text-emerald-200 hover:bg-emerald-800 font-medium border-x border-emerald-700">100%</button>
+            <button onclick="adjustFontSize(1)" aria-label="Increase text size" class="px-2 py-0.5 rounded text-xs text-emerald-100 hover:bg-emerald-800 font-bold">A+</button>
+          </div>
+          <button id="toggle-contrast-btn" onclick="toggleContrastMode()" class="px-2.5 py-1 rounded-lg bg-emerald-800 hover:bg-emerald-700 text-emerald-100 border border-emerald-700 text-xs font-semibold" aria-pressed="false">
+            <i class="fa-solid fa-circle-half-stroke mr-1" aria-hidden="true"></i>Contrast
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="bg-emerald-850 p-2 rounded-lg border border-emerald-700 flex items-center justify-center text-emerald-100" aria-hidden="true">
+          <i class="fa-solid fa-calculator text-base"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm sm:text-base leading-tight text-white">Healthy Life Family Clinic</h1>
+          <p class="text-[11px] text-emerald-300">Medical Bookkeeping Lab</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <span id="student-badge" class="text-xs text-emerald-200 hidden sm:inline">Jordan Lee</span>
+        <button onclick="resetLabData()" title="Reset All Lab Transactions" class="px-2.5 py-1 bg-emerald-900 hover:bg-emerald-800 text-emerald-200 rounded-lg text-xs font-medium border border-emerald-700" aria-label="Reset Lab Data">
+          <i class="fa-solid fa-arrows-rotate mr-1" aria-hidden="true"></i>Reset
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 w-full flex-1 flex flex-col">
+    <!-- Simplified Progress & Clean Tabs -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-3 mb-6" role="region" aria-label="Module Tabs">
+      <div class="flex items-center justify-between mb-3 px-1 text-xs text-slate-600">
+        <span class="font-bold text-slate-800">Bookkeeping Course Progression</span>
+        <span id="progress-percent" class="font-bold text-emerald-800" aria-live="polite">17% Completed</span>
+      </div>
+      <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-3 border border-slate-200">
+        <div id="progress-bar-fill" class="bg-emerald-700 h-full rounded-full transition-all duration-300 w-1/6"></div>
+      </div>
+
+      <!-- Clean Tabs -->
+      <nav class="flex overflow-x-auto space-x-1.5 text-xs font-semibold" id="simulation-tabs" role="tablist">
+        <button onclick="switchTab('tab-theory')" id="nav-tab-theory" role="tab" aria-selected="true" class="tab-btn px-3 py-2 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-700 whitespace-nowrap">
+          1. Basics (Debits/Credits)
+        </button>
+        <button onclick="switchTab('tab-part1-april')" id="nav-tab-part1-april" role="tab" aria-selected="false" class="tab-btn px-3 py-2 rounded-lg text-slate-600 hover:text-emerald-900 hover:bg-slate-100 border border-transparent whitespace-nowrap">
+          2. April Ledger
+        </button>
+        <button onclick="switchTab('tab-multimonth')" id="nav-tab-multimonth" role="tab" aria-selected="false" class="tab-btn px-3 py-2 rounded-lg text-slate-600 hover:text-emerald-900 hover:bg-slate-100 border border-transparent whitespace-nowrap">
+          3. 6 Months
+        </button>
+        <button onclick="switchTab('tab-analysis')" id="nav-tab-analysis" role="tab" aria-selected="false" class="tab-btn px-3 py-2 rounded-lg text-slate-600 hover:text-emerald-900 hover:bg-slate-100 border border-transparent whitespace-nowrap">
+          4. Analysis
+        </button>
+        <button onclick="switchTab('tab-reflection')" id="nav-tab-reflection" role="tab" aria-selected="false" class="tab-btn px-3 py-2 rounded-lg text-slate-600 hover:text-emerald-900 hover:bg-slate-100 border border-transparent whitespace-nowrap">
+          5. Reflection
+        </button>
+        <button onclick="switchTab('tab-quiz')" id="nav-tab-quiz" role="tab" aria-selected="false" class="tab-btn px-3 py-2 rounded-lg text-slate-600 hover:text-emerald-900 hover:bg-slate-100 border border-transparent whitespace-nowrap">
+          6. Certification Exam
+        </button>
+      </nav>
+    </div>
+
+    <!-- MAIN BODY -->
+    <main id="main-simulation-content" class="flex-1" tabindex="-1">
+
+      <!-- SECTION 1: THEORY -->
+      <section id="tab-theory" role="tabpanel" aria-labelledby="nav-tab-theory" class="tab-content block space-y-5">
+        <div class="bg-emerald-900 text-white p-5 rounded-xl flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold">1. Understanding Debits &amp; Credits</h2>
+            <p class="text-xs text-emerald-200 mt-0.5">Cash in vs. Cash out in medical clinic bookkeeping.</p>
+          </div>
+          <div class="text-right border-l border-emerald-700 pl-4">
+            <span class="text-[10px] text-emerald-300 block uppercase font-bold">Accounting Formula</span>
+            <span class="text-xs font-mono font-bold text-white">Assets = Liabilities + Equity</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-2 mb-2 text-emerald-800 font-bold">
+              <i class="fa-solid fa-circle-arrow-up text-base"></i>
+              <span class="text-sm text-slate-900 font-bold">DEBIT (+ Cash Inflow)</span>
+            </div>
+            <p class="text-slate-600 mb-3">Money collected increases the clinic's Cash Asset account via a <strong>Debit</strong>.</p>
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1 font-mono text-slate-700">
+              <div class="flex justify-between"><span>Patient Copays</span><strong class="text-emerald-700">DEBIT (+Cash)</strong></div>
+              <div class="flex justify-between"><span>Insurance Reimbursement</span><strong class="text-emerald-700">DEBIT (+Cash)</strong></div>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-2 mb-2 text-rose-800 font-bold">
+              <i class="fa-solid fa-circle-arrow-down text-base"></i>
+              <span class="text-sm text-slate-900 font-bold">CREDIT (- Cash Outflow)</span>
+            </div>
+            <p class="text-slate-600 mb-3">Disbursements reduce the clinic's Cash Asset account via a <strong>Credit</strong>.</p>
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1 font-mono text-slate-700">
+              <div class="flex justify-between"><span>Staff Payroll</span><strong class="text-rose-700">CREDIT (-Cash)</strong></div>
+              <div class="flex justify-between"><span>Clinic Rent</span><strong class="text-rose-700">CREDIT (-Cash)</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Interactive Debit &amp; Credit Practice: Apr, May, Jun</h3>
+              <p class="text-xs text-slate-500">Select a month to practice identifying cash inflows (Debits) vs. outflows (Credits).</p>
+            </div>
+            <div class="inline-flex rounded-lg border border-slate-200 bg-slate-50 p-1" role="group" aria-label="Interactive practice month selector">
+              <button onclick="selectPracticeMonth('apr')" id="btn-practice-apr" class="px-3 py-1 rounded text-xs font-bold bg-emerald-800 text-white shadow-sm">
+                April (Week 1)
+              </button>
+              <button onclick="selectPracticeMonth('may')" id="btn-practice-may" class="px-3 py-1 rounded text-xs font-bold text-slate-600 hover:text-emerald-800 hover:bg-slate-200/60">
+                May (Clinical)
+              </button>
+              <button onclick="selectPracticeMonth('jun')" id="btn-practice-jun" class="px-3 py-1 rounded text-xs font-bold text-slate-600 hover:text-emerald-800 hover:bg-slate-200/60">
+                June (Vaccines/Staff)
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div>
+              <span class="font-bold text-slate-800" id="practice-month-title">April Scenario: Starting Operations &amp; Claims</span>
+              <span class="text-slate-500 block" id="practice-month-desc">Practice classifying receipts and operating expenses.</span>
+            </div>
+            <div class="bg-white px-2.5 py-1 rounded border border-slate-200 font-bold text-slate-700">
+              Score: <span id="practice-score" class="text-emerald-800 font-mono">0</span> / 4 Correct
+            </div>
+          </div>
+
+          <div id="practice-items-container" class="space-y-2.5 text-xs"></div>
+
+          <div id="practice-summary-tip" class="p-3 bg-emerald-50/70 border border-emerald-200 rounded-lg text-xs text-emerald-950 flex items-start gap-2">
+            <i class="fa-solid fa-circle-info text-emerald-700 mt-0.5 text-sm" aria-hidden="true"></i>
+            <div>
+              <strong class="font-bold">Clinic Bookkeeping Rule:</strong> 
+              <span id="practice-rule-text">When cash enters the bank account from patients or insurance carriers, Cash is DEBITED. When checks or electronic transfers pay rent, payroll, or suppliers, Cash is CREDITED.</span>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-200 flex justify-end">
+            <button onclick="completeSection(1); switchTab('tab-part1-april')" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg text-xs font-bold flex items-center gap-2">
+              <span>Next: April Master Ledger</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: APRIL LEDGER -->
+      <section id="tab-part1-april" role="tabpanel" aria-labelledby="nav-tab-part1-april" class="tab-content hidden space-y-5">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="text-[11px] font-bold uppercase text-emerald-800">Part 1 &amp; 2</span>
+            <h2 class="text-base font-bold text-slate-900">April Master Bookkeeping Ledger</h2>
+          </div>
+          <div class="flex items-center gap-3 text-xs font-mono font-bold">
+            <span class="text-slate-600">Start: $10,000</span>
+            <span class="text-emerald-700">Income: +$22,930</span>
+            <span class="text-rose-700">Expense: -$9,535</span>
+            <span class="bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded">End: $23,395</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <label for="april-filter-type" class="sr-only">Filter transactions</label>
+              <select id="april-filter-type" onchange="filterAprilLedger()" class="text-xs border border-slate-300 rounded px-2.5 py-1.5 bg-white text-slate-800 font-medium">
+                <option value="all">All Transactions</option>
+                <option value="income">Income Only</option>
+                <option value="expense">Expenses Only</option>
+              </select>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="toggleElement('april-add-drawer')" class="text-xs text-emerald-800 hover:text-emerald-900 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-plus-circle"></i> Add Entry
+              </button>
+              <button onclick="exportAprilLedgerCSV()" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded text-xs font-semibold border border-slate-300">
+                <i class="fa-solid fa-download mr-1"></i> CSV
+              </button>
+            </div>
+          </div>
+
+          <div id="april-add-drawer" class="hidden mb-4 p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs space-y-2">
+            <div class="font-bold text-slate-800">Add New Entry to Ledger:</div>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+              <input id="new-tx-date" type="text" value="Apr 30" placeholder="Date" class="border p-1.5 rounded bg-white">
+              <input id="new-tx-desc" type="text" placeholder="Description" class="border p-1.5 rounded sm:col-span-2 bg-white">
+              <select id="new-tx-type" class="border p-1.5 rounded bg-white">
+                <option value="income">Income (Debit)</option>
+                <option value="expense">Expense (Credit)</option>
+              </select>
+            </div>
+            <div class="flex justify-end gap-2 pt-1">
+              <input id="new-tx-amount" type="number" step="0.01" min="0" placeholder="Amount ($)" class="border p-1.5 rounded w-32 bg-white">
+              <button onclick="addCustomAprilTransaction()" class="px-3 py-1.5 bg-emerald-800 text-white font-bold rounded">Post</button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto max-h-[420px] border border-slate-200 rounded-lg">
+            <table class="w-full text-xs text-left" aria-label="April Bookkeeping Ledger">
+              <thead class="bg-slate-100 text-slate-800 uppercase font-bold text-[11px] border-b border-slate-300 sticky top-0">
+                <tr>
+                  <th scope="col" class="py-2.5 px-3">Date</th>
+                  <th scope="col" class="py-2.5 px-3">Description</th>
+                  <th scope="col" class="py-2.5 px-3 text-right">Income (Debit +)</th>
+                  <th scope="col" class="py-2.5 px-3 text-right">Expense (Credit -)</th>
+                  <th scope="col" class="py-2.5 px-3 text-right">Running Balance</th>
+                </tr>
+              </thead>
+              <tbody id="april-ledger-tbody" class="divide-y divide-slate-100"></tbody>
+              <tfoot class="bg-slate-50 font-bold border-t border-slate-300 text-slate-900 sticky bottom-0">
+                <tr>
+                  <td colspan="2" class="py-2 px-3 text-right uppercase text-[11px]">April Totals:</td>
+                  <td id="april-foot-income" class="py-2 px-3 text-right text-emerald-800 font-mono">$22,930.00</td>
+                  <td id="april-foot-expense" class="py-2 px-3 text-right text-rose-800 font-mono">($9,535.00)</td>
+                  <td id="april-foot-balance" class="py-2 px-3 text-right text-slate-900 font-mono font-bold">$23,395.00</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-end">
+            <button onclick="completeSection(2); switchTab('tab-multimonth')" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg text-xs font-bold flex items-center gap-2">
+              <span>Next: 6-Month Practice Ledgers</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: 6-MONTH EXTENSION -->
+      <section id="tab-multimonth" role="tabpanel" aria-labelledby="nav-tab-multimonth" class="tab-content hidden space-y-5">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="text-[11px] font-bold uppercase text-teal-800">Part 2 Extension</span>
+            <h2 class="text-base font-bold text-slate-900">6-Month Practice Ledgers (Apr - Sep)</h2>
+          </div>
+          <div class="text-xs font-mono font-bold text-slate-800 bg-teal-50 border border-teal-200 px-3 py-1 rounded">
+            Ending September Cash: <span class="text-emerald-800">$41,895.00</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex overflow-x-auto gap-2 pb-2 mb-3 border-b border-slate-200" role="group" aria-label="Select month">
+            <button onclick="viewMonthLedger('apr')" id="btn-month-apr" class="month-pill-btn px-3 py-1.5 rounded text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-600">
+              Apr ($23,395)
+            </button>
+            <button onclick="viewMonthLedger('may')" id="btn-month-may" class="month-pill-btn px-3 py-1.5 rounded text-xs font-bold text-slate-600 hover:bg-slate-100 border border-transparent">
+              May ($27,150)
+            </button>
+            <button onclick="viewMonthLedger('jun')" id="btn-month-jun" class="month-pill-btn px-3 py-1.5 rounded text-xs font-bold text-slate-600 hover:bg-slate-100 border border-transparent">
+              Jun ($30,940)
+            </button>
+            <button onclick="viewMonthLedger('jul')" id="btn-month-jul" class="month-pill-btn px-3 py-1.5 rounded text-xs font-bold text-slate-600 hover:bg-slate-100 border border-transparent">
+              Jul ($33,480)
+            </button>
+            <button onclick="viewMonthLedger('aug')" id="btn-month-aug" class="month-pill-btn px-3 py-1.5 rounded text-xs font-bold text-slate-600 hover:bg-slate-100 border border-transparent">
+              Aug ($37,610)
+            </button>
+            <button onclick="viewMonthLedger('sep')" id="btn-month-sep" class="month-pill-btn px-3 py-1.5 rounded text-xs font-bold text-slate-600 hover:bg-slate-100 border border-transparent">
+              Sep ($41,895)
+            </button>
+          </div>
+
+          <div class="flex items-center justify-between mb-3 text-xs">
+            <h3 id="multi-month-title" class="font-bold text-slate-900 text-sm">April Detailed Bookkeeping Ledger</h3>
+            <span id="multi-month-subtitle" class="text-slate-600 font-mono"></span>
+          </div>
+
+          <div class="overflow-x-auto max-h-[380px] border border-slate-200 rounded-lg">
+            <table class="w-full text-xs text-left" aria-label="Monthly Bookkeeping Ledger">
+              <thead class="bg-slate-100 text-slate-800 uppercase font-bold text-[11px] border-b border-slate-300 sticky top-0">
+                <tr>
+                  <th scope="col" class="py-2.5 px-3">Date</th>
+                  <th scope="col" class="py-2.5 px-3">Description</th>
+                  <th scope="col" class="py-2.5 px-3 text-right">Income (Debit)</th>
+                  <th scope="col" class="py-2.5 px-3 text-right">Expense (Credit)</th>
+                  <th scope="col" class="py-2.5 px-3 text-right">Running Balance</th>
+                </tr>
+              </thead>
+              <tbody id="multi-month-tbody" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-end">
+            <button onclick="completeSection(3); switchTab('tab-analysis')" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg text-xs font-bold flex items-center gap-2">
+              <span>Next: Financial Analysis</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: ANALYSIS -->
+      <section id="tab-analysis" role="tabpanel" aria-labelledby="nav-tab-analysis" class="tab-content hidden space-y-5">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-[11px] font-bold uppercase text-indigo-800">Part 3</span>
+            <h2 class="text-base font-bold text-slate-900">Financial Analysis Questionnaire</h2>
+          </div>
+          <span id="analysis-verified-status" class="text-xs font-bold text-indigo-900 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded">
+            0 / 5 Verified
+          </span>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs">
+          <!-- Question 1 -->
+          <div class="p-3 bg-slate-50/70 rounded-lg border border-slate-200">
+            <label for="p3-q1-input" class="block font-bold text-slate-800 mb-1">
+              1. Total Income received during April?
+            </label>
+            <div class="flex gap-2 max-w-sm mt-1">
+              <span class="px-2.5 py-1.5 border border-r-0 rounded-l bg-slate-100 text-slate-600 font-bold">$</span>
+              <input type="number" id="p3-q1-input" placeholder="22930.00" class="w-full p-1.5 border rounded-r bg-white font-mono">
+              <button onclick="verifyAnalysisQ1()" class="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold rounded">Verify</button>
+            </div>
+            <div id="p3-q1-feedback" class="mt-1.5 font-bold hidden"></div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="p-3 bg-slate-50/70 rounded-lg border border-slate-200">
+            <label for="p3-q2-input" class="block font-bold text-slate-800 mb-1">
+              2. Total Expenses spent during April?
+            </label>
+            <div class="flex gap-2 max-w-sm mt-1">
+              <span class="px-2.5 py-1.5 border border-r-0 rounded-l bg-slate-100 text-slate-600 font-bold">$</span>
+              <input type="number" id="p3-q2-input" placeholder="9535.00" class="w-full p-1.5 border rounded-r bg-white font-mono">
+              <button onclick="verifyAnalysisQ2()" class="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold rounded">Verify</button>
+            </div>
+            <div id="p3-q2-feedback" class="mt-1.5 font-bold hidden"></div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="p-3 bg-slate-50/70 rounded-lg border border-slate-200">
+            <label for="p3-q3-input" class="block font-bold text-slate-800 mb-1">
+              3. Ending cash balance on April 30?
+            </label>
+            <div class="flex gap-2 max-w-sm mt-1">
+              <span class="px-2.5 py-1.5 border border-r-0 rounded-l bg-slate-100 text-slate-600 font-bold">$</span>
+              <input type="number" id="p3-q3-input" placeholder="23395.00" class="w-full p-1.5 border rounded-r bg-white font-mono">
+              <button onclick="verifyAnalysisQ3()" class="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold rounded">Verify</button>
+            </div>
+            <div id="p3-q3-feedback" class="mt-1.5 font-bold hidden"></div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="p-3 bg-slate-50/70 rounded-lg border border-slate-200">
+            <label for="p3-q4-select" class="block font-bold text-slate-800 mb-1">
+              4. Which expense category had the greatest impact on the clinic's budget?
+            </label>
+            <div class="flex gap-2 max-w-sm mt-1">
+              <select id="p3-q4-select" class="w-full p-1.5 border rounded bg-white">
+                <option value="">Select Category</option>
+                <option value="rent">Facility Rent ($1,500)</option>
+                <option value="payroll">Staff Payroll ($3,200)</option>
+                <option value="equipment">Medical Equipment ($1,100)</option>
+                <option value="supplies">Office Supplies ($745)</option>
+              </select>
+              <button onclick="verifyAnalysisQ4()" class="px-3 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold rounded">Verify</button>
+            </div>
+            <div id="p3-q4-feedback" class="mt-1.5 font-bold hidden"></div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="p-3 bg-slate-50/70 rounded-lg border border-slate-200">
+            <label for="p3-q5-text" class="block font-bold text-slate-800 mb-1">
+              5. Why is accurate bookkeeping important in healthcare?
+            </label>
+            <textarea id="p3-q5-text" rows="3" class="w-full p-2 border rounded bg-white mt-1" placeholder="Explain why accurate bookkeeping ensures payroll, clinical supplies, and regulatory compliance..."></textarea>
+            <div class="flex justify-between items-center mt-2">
+              <span id="p3-q5-count" class="text-slate-500">Min 15 words</span>
+              <button onclick="saveAnalysisQ5()" class="px-3 py-1.5 bg-indigo-800 hover:bg-indigo-900 text-white font-bold rounded">Save Rationale</button>
+            </div>
+            <div id="p3-q5-feedback" class="mt-1 font-bold hidden"></div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-200 flex justify-end">
+            <button onclick="completeSection(4); switchTab('tab-reflection')" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg text-xs font-bold flex items-center gap-2">
+              <span>Next: Reflection</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: REFLECTION -->
+      <section id="tab-reflection" role="tabpanel" aria-labelledby="nav-tab-reflection" class="tab-content hidden space-y-5">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-[11px] font-bold uppercase text-slate-600">Part 4</span>
+            <h2 class="text-base font-bold text-slate-900">Bookkeeping Reflection</h2>
+          </div>
+          <button onclick="loadSampleReflection()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded border border-slate-300">
+            <i class="fa-solid fa-lightbulb mr-1 text-amber-600"></i> Load Sample Draft
+          </button>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs">
+          <div>
+            <label for="ref-topic-1" class="block font-bold text-slate-800 mb-1">
+              A. Core Principles Learned (Debits, Credits, Running Balance)
+            </label>
+            <textarea id="ref-topic-1" rows="3" class="w-full p-2 border rounded bg-white" placeholder="Discuss what you learned about tracking daily income, expenses, and running balances..."></textarea>
+          </div>
+
+          <div>
+            <label for="ref-topic-2" class="block font-bold text-slate-800 mb-1">
+              B. How Bookkeeping Supports Healthcare Operations
+            </label>
+            <textarea id="ref-topic-2" rows="3" class="w-full p-2 border rounded bg-white" placeholder="Explain how solvent cash maintains vaccine inventory, PPE, rent, and timely payroll..."></textarea>
+          </div>
+
+          <div>
+            <label for="ref-topic-3" class="block font-bold text-slate-800 mb-1">
+              C. Financial Challenges Unique to Healthcare Offices
+            </label>
+            <textarea id="ref-topic-3" rows="3" class="w-full p-2 border rounded bg-white" placeholder="Discuss delayed insurance claims, copay defaults, and supply cost changes..."></textarea>
+          </div>
+
+          <div>
+            <label for="ref-topic-4" class="block font-bold text-slate-800 mb-1">
+              D. How Technology Improves Bookkeeping Accuracy
+            </label>
+            <textarea id="ref-topic-4" rows="3" class="w-full p-2 border rounded bg-white" placeholder="Discuss practice management software, Electronic Remittance Advice (ERA), and automated reconciliation..."></textarea>
+          </div>
+
+          <div class="pt-2 border-t border-slate-200 flex items-center justify-between">
+            <button onclick="downloadReflectionDoc()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded text-xs font-bold border border-slate-300">
+              <i class="fa-solid fa-download mr-1"></i> Download Text
+            </button>
+            <button onclick="completeSection(5); switchTab('tab-quiz')" class="px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-lg text-xs font-bold flex items-center gap-2">
+              <span>Next: Certification Exam</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: CERTIFICATION EXAM -->
+      <section id="tab-quiz" role="tabpanel" aria-labelledby="nav-tab-quiz" class="tab-content hidden space-y-5">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-[11px] font-bold uppercase text-emerald-800">Part 5</span>
+            <h2 class="text-base font-bold text-slate-900">Bookkeeping Certification Exam</h2>
+          </div>
+          <span class="text-xs bg-slate-100 text-slate-800 px-2.5 py-1 rounded font-bold border border-slate-200">
+            Pass: 80% (16/20)
+          </span>
+        </div>
+
+        <div id="quiz-taking-container" class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-200 text-xs">
+            <span class="font-bold text-slate-700">Question <span id="current-q-index">1</span> of 20</span>
+            <span id="quiz-answered-count" class="text-slate-500 font-semibold">0 of 20 Answered</span>
+          </div>
+
+          <div class="min-h-[140px]">
+            <h3 id="question-text" class="text-sm sm:text-base font-bold text-slate-900 mb-4 leading-normal">
+              Loading question...
+            </h3>
+            <div id="options-container" class="space-y-2" role="radiogroup" aria-labelledby="question-text"></div>
+          </div>
+
+          <div class="mt-6 pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+            <button id="prev-q-btn" onclick="navigateExamQuestion(-1)" class="px-3 py-1.5 rounded border border-slate-300 font-bold text-slate-700 hover:bg-slate-100 disabled:opacity-30">
+              &larr; Previous
+            </button>
+            <div class="flex gap-2">
+              <button id="next-q-btn" onclick="navigateExamQuestion(1)" class="px-4 py-1.5 bg-slate-900 text-white rounded font-bold">
+                Next &rarr;
+              </button>
+              <button id="submit-exam-btn" onclick="gradeExam()" class="hidden px-4 py-1.5 bg-emerald-800 text-white rounded font-bold">
+                Submit Exam
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-200">
+            <div class="text-[11px] font-bold text-slate-600 mb-1.5">Jump to:</div>
+            <div id="quiz-pills-grid" class="flex flex-wrap gap-1" role="group" aria-label="Question Navigator"></div>
+          </div>
+        </div>
+
+        <div id="quiz-results-container" class="hidden space-y-5">
+          <div id="results-banner" class="p-5 rounded-xl text-center border"></div>
+
+          <div id="certificate-printable-section" class="hidden">
+            <!-- Controls above certificate: Name Input & Print Button -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4 no-print bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs">
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <label for="cert-name-input" class="font-bold text-slate-700 whitespace-nowrap">
+                  <i class="fa-solid fa-user-pen mr-1 text-emerald-700"></i>Student Name:
+                </label>
+                <input 
+                  type="text" 
+                  id="cert-name-input" 
+                  value="Jordan Lee" 
+                  oninput="updateCertificateName(this.value)" 
+                  placeholder="Enter recipient name" 
+                  class="border border-slate-300 px-2.5 py-1.5 rounded bg-white text-slate-800 font-semibold focus:border-emerald-600 w-full sm:w-56"
+                />
+              </div>
+              <button onclick="window.print()" class="w-full sm:w-auto px-4 py-1.5 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded flex items-center justify-center gap-1.5 transition-colors">
+                <i class="fa-solid fa-print"></i> Print Certificate
+              </button>
+            </div>
+
+            <div class="bg-white p-8 sm:p-10 rounded-2xl border-4 border-double border-emerald-950 text-center relative">
+              <h4 class="text-[10px] uppercase tracking-widest font-bold text-emerald-900 mb-1">Healthy Life Family Clinic</h4>
+              <h2 class="cert-font-serif text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Certificate of Healthcare Bookkeeping Competency</h2>
+              <p class="text-xs text-slate-500 uppercase tracking-wider mb-4">Practice Accounting &amp; Ledger Administration</p>
+
+              <p class="text-xs text-slate-600 mb-1">Awarded to</p>
+              <h3 
+                id="cert-recipient-name" 
+                contenteditable="true" 
+                spellcheck="false"
+                onblur="handleCertNameBlur(this.textContent)"
+                title="Click to edit name directly" 
+                class="cert-font-serif text-xl sm:text-2xl font-bold text-emerald-950 border-b-2 border-emerald-800 inline-block px-6 py-0.5 mb-1 cursor-text hover:bg-emerald-50/50 transition-colors focus:bg-emerald-50 focus:outline-none"
+              >
+                Jordan Lee
+              </h3>
+              <p class="text-[10px] text-slate-400 mb-3 no-print">(Click name above or use the box above to edit)</p>
+
+              <p class="text-xs text-slate-600 max-w-lg mx-auto mb-4">
+                For completing the 6-month ledger simulation, mastering debit &amp; credit principles, calculating continuous cash running balances, and passing the clinical accounting assessment.
+              </p>
+
+              <div class="flex justify-between items-center max-w-md mx-auto pt-3 border-t border-slate-200 text-left text-[11px]">
+                <div>
+                  <span class="text-slate-400 block text-[9px] uppercase font-bold">Status</span>
+                  <span id="cert-score-display" class="font-bold text-emerald-800">Passed</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-slate-400 block text-[9px] uppercase font-bold">Date</span>
+                  <span id="cert-date-display" class="font-bold text-slate-800"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="font-bold text-slate-900 text-xs mb-3">Exam Review &amp; Rationales</h3>
+            <div id="exam-review-container" class="space-y-2 text-xs"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" role="status" aria-live="polite" class="fixed bottom-4 right-4 bg-slate-900 text-white px-3.5 py-2.5 rounded-lg shadow-lg flex items-center gap-2 transform translate-y-20 transition-transform duration-200 z-50 text-xs font-medium">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400" aria-hidden="true"></i>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script>
+    // --- ACCESSIBILITY HANDLERS ---
+    let currentFontScalePercent = 100;
+    let isHighContrast = false;
+
+    function toggleElement(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    function announceToScreenReader(message) {
+      const el = document.getElementById('sr-announcer');
+      if (el) el.textContent = message;
+    }
+
+    function adjustFontSize(delta) {
+      currentFontScalePercent = Math.min(125, Math.max(90, currentFontScalePercent + (delta * 5)));
+      document.documentElement.style.setProperty('--font-scale', `${currentFontScalePercent / 100}rem`);
+      announceToScreenReader(`Font scale ${currentFontScalePercent} percent`);
+    }
+
+    function resetFontSize() {
+      currentFontScalePercent = 100;
+      document.documentElement.style.setProperty('--font-scale', '1rem');
+      announceToScreenReader("Font size reset");
+    }
+
+    function toggleContrastMode() {
+      isHighContrast = !isHighContrast;
+      document.body.classList.toggle('high-contrast-mode', isHighContrast);
+      const btn = document.getElementById('toggle-contrast-btn');
+      btn.setAttribute('aria-pressed', isHighContrast);
+      announceToScreenReader(isHighContrast ? "High contrast on" : "Standard contrast");
+    }
+
+    // --- CERTIFICATE NAME EDITING ---
+    let currentStudentName = "Jordan Lee";
+
+    function updateCertificateName(name) {
+      currentStudentName = name || "Jordan Lee";
+      const certEl = document.getElementById('cert-recipient-name');
+      const badgeEl = document.getElementById('student-badge');
+      const inputEl = document.getElementById('cert-name-input');
+      
+      if (certEl && certEl.textContent !== currentStudentName) {
+        certEl.textContent = currentStudentName;
+      }
+      if (badgeEl) badgeEl.textContent = currentStudentName;
+      if (inputEl && inputEl.value !== currentStudentName) {
+        inputEl.value = currentStudentName;
+      }
+    }
+
+    function handleCertNameBlur(text) {
+      const trimmed = text.trim();
+      updateCertificateName(trimmed || "Jordan Lee");
+    }
+
+    // --- TAB NAVIGATION ---
+    function switchTab(targetId) {
+      document.querySelectorAll('.tab-content').forEach(p => p.classList.add('hidden'));
+      const activePanel = document.getElementById(targetId);
+      if (activePanel) activePanel.classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-50', 'text-emerald-900', 'border-emerald-700');
+        btn.classList.add('border-transparent', 'text-slate-600');
+        btn.setAttribute('aria-selected', 'false');
+      });
+
+      const navBtnId = targetId.replace('tab-', 'nav-tab-');
+      const activeNav = document.getElementById(navBtnId);
+      if (activeNav) {
+        activeNav.classList.remove('border-transparent', 'text-slate-600');
+        activeNav.classList.add('bg-emerald-50', 'text-emerald-900', 'border-emerald-700');
+        activeNav.setAttribute('aria-selected', 'true');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- PROGRESS TRACKER ---
+    let completedModules = {
+      1: true,
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+      6: false
+    };
+
+    function completeSection(secNum) {
+      completedModules[secNum] = true;
+      let total = Object.values(completedModules).filter(Boolean).length;
+      let pct = Math.round((total / 6) * 100);
+      document.getElementById('progress-bar-fill').style.width = `${pct}%`;
+      document.getElementById('progress-percent').textContent = `${pct}% Completed`;
+    }
+
+    // --- MULTI-MONTH PRACTICE DATA ---
+    const monthlyPracticeData = {
+      apr: {
+        title: "April Scenario: Initial Clinic Workflow",
+        desc: "Classify patient fee collections, insurance claims, and monthly clinic lease expenses.",
+        rule: "April highlights daily cash inflows from copays (Debits) balanced against initial facility overhead like rent and utilities (Credits).",
+        items: [
+          {
+            label: "1. Patient Copay Collected at Check-In ($425.00)",
+            detail: "Cash and card payments deposited directly to clinic operating account.",
+            type: "debit",
+            explanation: "DEBIT: Increases the Cash Asset account as liquid funds are received at the front desk."
+          },
+          {
+            label: "2. Office Supplies Purchased with Clinic Debit Card ($320.00)",
+            detail: "Chart folders, toner, and prescription pads paid via electronic checkout.",
+            type: "credit",
+            explanation: "CREDIT: Reduces the Cash Asset account because funds flowed out to pay an expense."
+          },
+          {
+            label: "3. Major Insurance Carrier Wire Received ($4,500.00)",
+            detail: "Electronic Funds Transfer (EFT) settlement for billed patient claims.",
+            type: "debit",
+            explanation: "DEBIT: Increases the clinic's Cash Asset account via third-party payer reimbursement."
+          },
+          {
+            label: "4. Facility Lease Rent Paid for April ($1,500.00)",
+            detail: "Monthly suite lease payment check cleared through bank.",
+            type: "credit",
+            explanation: "CREDIT: Decreases the clinic's Cash Asset account to satisfy occupancy obligations."
+          }
+        ]
+      },
+      may: {
+        title: "May Scenario: Clinical Restock & Bi-Weekly Payroll",
+        desc: "Evaluate patient settlements, supply chain restocks, and mid-month staff wages.",
+        rule: "In May, observe how large clinical payroll checks (Credits) require substantial insurance claim volume (Debits) to stay solvent.",
+        items: [
+          {
+            label: "1. Commercial Claims Reimbursement ($5,100.00)",
+            detail: "Direct deposit from health plan covering primary care consultations.",
+            type: "debit",
+            explanation: "DEBIT: Inflow of cash into the bank account increases the Cash Asset balance."
+          },
+          {
+            label: "2. Medical Exam Room Restock Supplies ($480.00)",
+            detail: "Order of sterile gloves, exam table paper rolls, and disposable specula paid.",
+            type: "credit",
+            explanation: "CREDIT: Cash outflow decreases the Cash Asset balance to acquire consumable supplies."
+          },
+          {
+            label: "3. Mid-Month Clinical Staff Payroll Check ($3,200.00)",
+            detail: "Direct deposit disbursements for medical assistants and front office staff.",
+            type: "credit",
+            explanation: "CREDIT: Salary compensation reduces available Cash assets in the bank."
+          },
+          {
+            label: "4. Medicare Part B Electronic Deposit ($2,040.00)",
+            detail: "CMS reimbursement deposited for senior preventative wellness visits.",
+            type: "debit",
+            explanation: "DEBIT: Cash inflow increases the Cash Asset account balance."
+          }
+        ]
+      },
+      jun: {
+        title: "June Scenario: Vaccine Stock & Summer Checkups",
+        desc: "Practice analyzing vaccine purchases, state child immunizations, and self-pay visits.",
+        rule: "June highlights purchasing clinical inventory upfront (Credit) and recovering capital through vaccine administration reimbursements (Debit).",
+        items: [
+          {
+            label: "1. Pediatric Vaccine Supplies Bulk Order ($950.00)",
+            detail: "Invoice paid to medical distributor for refrigerated MMR and DTap vials.",
+            type: "credit",
+            explanation: "CREDIT: Outflow of cash to purchase medication inventory decreases Cash assets."
+          },
+          {
+            label: "2. Walk-in Self-Pay & Copay Collections ($1,420.00)",
+            detail: "Credit card settlements collected at reception during summer physicals.",
+            type: "debit",
+            explanation: "DEBIT: Increases cash assets in the clinic's account immediately upon collection."
+          },
+          {
+            label: "3. State Vaccine Program Administration Fee ($1,650.00)",
+            detail: "Government agency reimbursement credited for pediatric vaccine administration.",
+            type: "debit",
+            explanation: "DEBIT: Inflow of cash into the checking account increases the cash asset balance."
+          },
+          {
+            label: "4. Bi-Weekly Staff Payroll Disbursement ($3,200.00)",
+            detail: "Wages disbursed to clinic nursing, medical assistant, and administrative team.",
+            type: "credit",
+            explanation: "CREDIT: Decreases the cash asset balance through essential operating expense payment."
+          }
+        ]
+      }
+    };
+
+    let activePracticeMonth = 'apr';
+    let practiceScores = { apr: {}, may: {}, jun: {} };
+
+    function selectPracticeMonth(monthKey) {
+      activePracticeMonth = monthKey;
+
+      ['apr', 'may', 'jun'].forEach(m => {
+        const btn = document.getElementById(`btn-practice-${m}`);
+        if (m === monthKey) {
+          btn.className = "px-3 py-1 rounded text-xs font-bold bg-emerald-800 text-white shadow-sm";
+        } else {
+          btn.className = "px-3 py-1 rounded text-xs font-bold text-slate-600 hover:text-emerald-800 hover:bg-slate-200/60";
+        }
+      });
+
+      renderPracticeModule();
+    }
+
+    function renderPracticeModule() {
+      const data = monthlyPracticeData[activePracticeMonth];
+      document.getElementById('practice-month-title').textContent = data.title;
+      document.getElementById('practice-month-desc').textContent = data.desc;
+      document.getElementById('practice-rule-text').textContent = data.rule;
+
+      const container = document.getElementById('practice-items-container');
+      container.innerHTML = '';
+
+      let correctCount = 0;
+
+      data.items.forEach((item, index) => {
+        const answeredState = practiceScores[activePracticeMonth][index];
+        if (answeredState && answeredState.isCorrect) correctCount++;
+
+        const card = document.createElement('div');
+        card.className = "p-3 rounded-lg border border-slate-200 bg-slate-50/70 space-y-2";
+
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <span class="font-bold text-slate-800">${item.label}</span>
+              <span class="text-slate-500 block text-[11px]">${item.detail}</span>
+            </div>
+            <div class="flex gap-2 shrink-0">
+              <button onclick="handlePracticeAnswer(${index}, 'debit')" class="px-3 py-1 text-xs font-bold rounded transition-colors ${answeredState && answeredState.chosen === 'debit' ? (answeredState.isCorrect ? 'bg-emerald-800 text-white' : 'bg-rose-700 text-white') : 'bg-emerald-700 hover:bg-emerald-800 text-white'}">
+                Debit (+ Cash)
+              </button>
+              <button onclick="handlePracticeAnswer(${index}, 'credit')" class="px-3 py-1 text-xs font-bold rounded transition-colors ${answeredState && answeredState.chosen === 'credit' ? (answeredState.isCorrect ? 'bg-rose-800 text-white' : 'bg-rose-700 text-white') : 'bg-rose-700 hover:bg-rose-800 text-white'}">
+                Credit (- Cash)
+              </button>
+            </div>
+          </div>
+          <div id="practice-feedback-${index}" class="text-xs font-semibold pl-1 ${answeredState ? '' : 'hidden'}">
+            ${answeredState ? (answeredState.isCorrect 
+              ? `<span class="text-emerald-800"><i class="fa-solid fa-circle-check mr-1"></i> Correct! ${item.explanation}</span>` 
+              : `<span class="text-rose-700"><i class="fa-solid fa-circle-xmark mr-1"></i> Incorrect. ${item.explanation}</span>`) : ''}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('practice-score').textContent = correctCount;
+    }
+
+    function handlePracticeAnswer(index, chosenType) {
+      const currentItem = monthlyPracticeData[activePracticeMonth].items[index];
+      const isCorrect = chosenType === currentItem.type;
+
+      practiceScores[activePracticeMonth][index] = {
+        chosen: chosenType,
+        isCorrect: isCorrect
+      };
+
+      renderPracticeModule();
+      announceToScreenReader(isCorrect ? `Correct for item ${index + 1}` : `Incorrect for item ${index + 1}. ${currentItem.explanation}`);
+    }
+
+    // --- APRIL LEDGER DATASET ---
+    let aprilTransactions = [
+      { date: "Apr 1", desc: "Beginning Cash Balance", amount: 10000, type: "balance", cat: "Opening" },
+      { date: "Apr 2", desc: "Patient Copay Collections", amount: 425, type: "income", cat: "Revenue" },
+      { date: "Apr 3", desc: "Patient Payments Received", amount: 1250, type: "income", cat: "Revenue" },
+      { date: "Apr 4", desc: "Postage and Mailing Expense", amount: -85, type: "expense", cat: "Expense" },
+      { date: "Apr 5", desc: "Office Supplies Purchased", amount: -320, type: "expense", cat: "Expense" },
+      { date: "Apr 6", desc: "Insurance Reimbursement", amount: 2900, type: "income", cat: "Revenue" },
+      { date: "Apr 7", desc: "Insurance Reimbursement Received", amount: 4500, type: "income", cat: "Revenue" },
+      { date: "Apr 8", desc: "Internet Service Payment", amount: -125, type: "expense", cat: "Expense" },
+      { date: "Apr 9", desc: "Lab Supply Purchase", amount: -275, type: "expense", cat: "Expense" },
+      { date: "Apr 10", desc: "Utility Bill Paid", amount: -450, type: "expense", cat: "Expense" },
+      { date: "Apr 11", desc: "Employee Parking Reimbursement", amount: -150, type: "expense", cat: "Expense" },
+      { date: "Apr 12", desc: "Patient Payments Received", amount: 875, type: "income", cat: "Revenue" },
+      { date: "Apr 13", desc: "Vaccine Reimbursement", amount: 625, type: "income", cat: "Revenue" },
+      { date: "Apr 14", desc: "Janitorial Service Payment", amount: -300, type: "expense", cat: "Expense" },
+      { date: "Apr 15", desc: "Payroll Expense", amount: -3200, type: "expense", cat: "Expense" },
+      { date: "Apr 16", desc: "Patient Copays Collected", amount: 550, type: "income", cat: "Revenue" },
+      { date: "Apr 17", desc: "Computer Software Subscription", amount: -145, type: "expense", cat: "Expense" },
+      { date: "Apr 18", desc: "Medical Equipment Purchased", amount: -1100, type: "expense", cat: "Expense" },
+      { date: "Apr 19", desc: "Insurance Reimbursement Received", amount: 1750, type: "income", cat: "Revenue" },
+      { date: "Apr 20", desc: "Office Furniture Purchase", amount: -650, type: "expense", cat: "Expense" },
+      { date: "Apr 21", desc: "Telephone Bill Paid", amount: -180, type: "expense", cat: "Expense" },
+      { date: "Apr 22", desc: "Insurance Reimbursement Received", amount: 2800, type: "income", cat: "Revenue" },
+      { date: "Apr 23", desc: "Continuing Education Expense", amount: -250, type: "expense", cat: "Expense" },
+      { date: "Apr 24", desc: "Patient Payment Received", amount: 385, type: "income", cat: "Revenue" },
+      { date: "Apr 25", desc: "Rent Expense", amount: -1500, type: "expense", cat: "Expense" },
+      { date: "Apr 26", desc: "Medical Supply Purchase", amount: -425, type: "expense", cat: "Expense" },
+      { date: "Apr 27", desc: "Patient Copays Collected", amount: 670, type: "income", cat: "Revenue" },
+      { date: "Apr 28", desc: "Patient Payments Received", amount: 950, type: "income", cat: "Revenue" },
+      { date: "Apr 29", desc: "Insurance Reimbursement Received", amount: 1900, type: "income", cat: "Revenue" },
+      { date: "Apr 30", desc: "Bank Service Charge", amount: -35, type: "expense", cat: "Expense" }
+    ];
+
+    function renderAprilLedger(filter = 'all') {
+      const tbody = document.getElementById('april-ledger-tbody');
+      tbody.innerHTML = '';
+
+      let runningBalance = 0;
+      let totalIncome = 0;
+      let totalExpense = 0;
+
+      aprilTransactions.forEach((tx) => {
+        if (tx.type === 'balance') {
+          runningBalance = tx.amount;
+        } else if (tx.type === 'income') {
+          runningBalance += tx.amount;
+          totalIncome += tx.amount;
+        } else if (tx.type === 'expense') {
+          runningBalance += tx.amount;
+          totalExpense += Math.abs(tx.amount);
+        }
+
+        if (filter === 'income' && tx.type === 'expense') return;
+        if (filter === 'expense' && tx.type === 'income') return;
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+
+        const incomeDisplay = tx.type === 'income' 
+          ? `<span class="text-emerald-700 font-bold font-mono">+$${tx.amount.toFixed(2)}</span>` 
+          : (tx.type === 'balance' ? `<span class="font-mono text-slate-600">$${tx.amount.toFixed(2)}</span>` : '<span class="text-slate-300">—</span>');
+
+        const expenseDisplay = tx.type === 'expense' 
+          ? `<span class="text-rose-700 font-bold font-mono">($${Math.abs(tx.amount).toFixed(2)})</span>` 
+          : '<span class="text-slate-300">—</span>';
+
+        tr.innerHTML = `
+          <td class="py-2 px-3 font-medium text-slate-800">${tx.date}</td>
+          <td class="py-2 px-3 text-slate-700">${tx.desc}</td>
+          <td class="py-2 px-3 text-right">${incomeDisplay}</td>
+          <td class="py-2 px-3 text-right">${expenseDisplay}</td>
+          <td class="py-2 px-3 text-right font-mono font-bold text-slate-800">$${runningBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('april-foot-balance').textContent = `$${runningBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      document.getElementById('april-foot-income').textContent = `$${totalIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      document.getElementById('april-foot-expense').textContent = `($${totalExpense.toLocaleString('en-US', { minimumFractionDigits: 2 })})`;
+    }
+
+    function filterAprilLedger() {
+      const type = document.getElementById('april-filter-type').value;
+      renderAprilLedger(type);
+    }
+
+    function addCustomAprilTransaction() {
+      const date = document.getElementById('new-tx-date').value.trim() || "Apr 30";
+      const desc = document.getElementById('new-tx-desc').value.trim();
+      const type = document.getElementById('new-tx-type').value;
+      const amtInput = parseFloat(document.getElementById('new-tx-amount').value);
+
+      if (!desc || isNaN(amtInput) || amtInput <= 0) {
+        showToast("Enter a description and dollar amount", "warning");
+        return;
+      }
+
+      aprilTransactions.push({
+        date: date,
+        desc: desc,
+        amount: type === 'expense' ? -amtInput : amtInput,
+        type: type,
+        cat: type === 'expense' ? 'Expense' : 'Revenue'
+      });
+
+      renderAprilLedger();
+      toggleElement('april-add-drawer');
+      showToast(`Added: ${desc}`, 'success');
+      document.getElementById('new-tx-desc').value = '';
+      document.getElementById('new-tx-amount').value = '';
+    }
+
+    function exportAprilLedgerCSV() {
+      let csv = "Date,Description,Income,Expense,Running Balance\n";
+      let bal = 0;
+      aprilTransactions.forEach(t => {
+        if (t.type === 'balance') bal = t.amount;
+        else bal += t.amount;
+        let inc = t.type === 'income' ? t.amount : (t.type === 'balance' ? t.amount : 0);
+        let exp = t.type === 'expense' ? Math.abs(t.amount) : 0;
+        csv += `"${t.date}","${t.desc}",${inc},${exp},${bal}\n`;
+      });
+      const link = document.createElement("a");
+      link.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+      link.download = "Healthy_Life_Clinic_April_Ledger.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // --- 6 MONTHS LEDGER DATA ---
+    const sixMonthsData = {
+      apr: {
+        title: "April Master Ledger",
+        startBal: 10000,
+        txs: aprilTransactions
+      },
+      may: {
+        title: "May Practice Ledger",
+        startBal: 23395,
+        txs: [
+          { date: "May 1", desc: "Roll-Forward Beginning Balance", amount: 23395, type: "balance" },
+          { date: "May 3", desc: "Patient Copay Collections", amount: 890, type: "income" },
+          { date: "May 5", desc: "Insurance Reimbursement Deposit", amount: 5100, type: "income" },
+          { date: "May 8", desc: "Medical Supplies Restock", amount: -480, type: "expense" },
+          { date: "May 12", desc: "Clinic Utilities Bill", amount: -415, type: "expense" },
+          { date: "May 15", desc: "Mid-Month Staff Payroll", amount: -3200, type: "expense" },
+          { date: "May 18", desc: "Insurance Reimbursement Received", amount: 3450, type: "income" },
+          { date: "May 25", desc: "Facility Monthly Lease Rent", amount: -1500, type: "expense" },
+          { date: "May 28", desc: "Patient Payments Received", amount: 1215, type: "income" },
+          { date: "May 31", desc: "End-of-Month Staff Payroll", amount: -3200, type: "expense" },
+          { date: "May 31", desc: "Medicare Part B Deposit", amount: 2040, type: "income" }
+        ]
+      },
+      jun: {
+        title: "June Practice Ledger",
+        startBal: 27150,
+        txs: [
+          { date: "Jun 1", desc: "Roll-Forward Beginning Balance", amount: 27150, type: "balance" },
+          { date: "Jun 3", desc: "Pediatric Vaccine Supplies Order", amount: -950, type: "expense" },
+          { date: "Jun 6", desc: "Patient Copays & Self-Pay", amount: 1420, type: "income" },
+          { date: "Jun 10", desc: "Insurance Claims Settlement", amount: 4800, type: "income" },
+          { date: "Jun 15", desc: "Bi-Weekly Staff Payroll", amount: -3200, type: "expense" },
+          { date: "Jun 20", desc: "State Vaccine Administration Reimbursement", amount: 1650, type: "income" },
+          { date: "Jun 24", desc: "Facility Lease Rent", amount: -1500, type: "expense" },
+          { date: "Jun 30", desc: "Bi-Weekly Staff Payroll", amount: -3200, type: "expense" },
+          { date: "Jun 30", desc: "Insurance Wire Settlement", amount: 4170, type: "income" }
+        ]
+      },
+      jul: {
+        title: "July Practice Ledger",
+        startBal: 30940,
+        txs: [
+          { date: "Jul 1", desc: "Roll-Forward Beginning Balance", amount: 30940, type: "balance" },
+          { date: "Jul 4", desc: "Urgent Care Copays Collected", amount: 920, type: "income" },
+          { date: "Jul 8", desc: "Equipment Maintenance", amount: -650, type: "expense" },
+          { date: "Jul 11", desc: "Insurance Payment Received", amount: 4400, type: "income" },
+          { date: "Jul 15", desc: "Bi-Weekly Staff Payroll", amount: -3200, type: "expense" },
+          { date: "Jul 22", desc: "PPE & Sterile Supplies", amount: -540, type: "expense" },
+          { date: "Jul 25", desc: "Facility Rent", amount: -1500, type: "expense" },
+          { date: "Jul 31", desc: "Bi-Weekly Staff Payroll", amount: -3200, type: "expense" },
+          { date: "Jul 31", desc: "BCBS Insurance Wire", amount: 4000, type: "income" }
+        ]
+      },
+      aug: {
+        title: "August Practice Ledger",
+        startBal: 33480,
+        txs: [
+          { date: "Aug 1", desc: "Roll-Forward Beginning Balance", amount: 33480, type: "balance" },
+          { date: "Aug 4", desc: "Back-to-School Physicals Copays", amount: 1850, type: "income" },
+          { date: "Aug 11", desc: "Medicaid Claims Deposit", amount: 5600, type: "income" },
+          { date: "Aug 15", desc: "Bi-Weekly Staff Payroll", amount: -3200, type: "expense" },
+          { date: "Aug 22", desc: "Malpractice Insurance Premium", amount: -1250, type: "expense" },
+          { date: "Aug 25", desc: "Facility Lease Rent", amount: -1500, type: "expense" },
+          { date: "Aug 31", desc: "Bi-Weekly Staff Payroll", amount: -3200, type: "expense" },
+          { date: "Aug 31", desc: "Insurance Reimbursement Wire", amount: 5000, type: "income" }
+        ]
+      },
+      sep: {
+        title: "September Practice Ledger",
+        startBal: 37610,
+        txs: [
+          { date: "Sep 1", desc: "Roll-Forward Beginning Balance", amount: 37610, type: "balance" },
+          { date: "Sep 4", desc: "Seasonal Flu Vaccine Order", amount: -1400, type: "expense" },
+          { date: "Sep 7", desc: "Flu Clinic Copays Collected", amount: 2150, type: "income" },
+          { date: "Sep 12", desc: "Medicare Electronic Funds Transfer", amount: 5900, type: "income" },
+          { date: "Sep 15", desc: "Bi-Weekly Staff Payroll", amount: -3200, type: "expense" },
+          { date: "Sep 25", desc: "Facility Lease Rent", amount: -1500, type: "expense" },
+          { date: "Sep 30", desc: "Bi-Weekly Staff Payroll", amount: -3200, type: "expense" },
+          { date: "Sep 30", desc: "Commercial Claims Final Settlement", amount: 5100, type: "income" }
+        ]
+      }
+    };
+
+    function viewMonthLedger(key) {
+      document.querySelectorAll('.month-pill-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-100', 'text-emerald-900', 'border-emerald-600');
+        btn.classList.add('border-transparent', 'text-slate-600');
+      });
+      const activeBtn = document.getElementById(`btn-month-${key}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-transparent', 'text-slate-600');
+        activeBtn.classList.add('bg-emerald-100', 'text-emerald-900', 'border-emerald-600');
+      }
+
+      const mData = sixMonthsData[key];
+      document.getElementById('multi-month-title').textContent = mData.title;
+
+      const tbody = document.getElementById('multi-month-tbody');
+      tbody.innerHTML = '';
+
+      let running = 0;
+      mData.txs.forEach(tx => {
+        if (tx.type === 'balance') running = tx.amount;
+        else running += tx.amount;
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="py-2 px-3 text-slate-800 font-medium">${tx.date}</td>
+          <td class="py-2 px-3 text-slate-700">${tx.desc}</td>
+          <td class="py-2 px-3 text-right font-mono ${tx.type === 'income' ? 'text-emerald-700 font-bold' : 'text-slate-300'}">
+            ${tx.type === 'income' ? '+$' + tx.amount.toFixed(2) : (tx.type === 'balance' ? '$' + tx.amount.toFixed(2) : '—')}
+          </td>
+          <td class="py-2 px-3 text-right font-mono ${tx.type === 'expense' ? 'text-rose-700 font-bold' : 'text-slate-300'}">
+            ${tx.type === 'expense' ? '($' + Math.abs(tx.amount).toFixed(2) + ')' : '—'}
+          </td>
+          <td class="py-2 px-3 text-right font-mono font-bold text-slate-800">$${running.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('multi-month-subtitle').textContent = `Beginning: $${mData.startBal.toLocaleString()} • Ending: $${running.toLocaleString()}`;
+    }
+
+    // --- PART 3: ANALYSIS VERIFICATIONS ---
+    const verifiedTracker = { q1: false, q2: false, q3: false, q4: false, q5: false };
+
+    function updateAnalysisScore() {
+      const count = Object.values(verifiedTracker).filter(Boolean).length;
+      document.getElementById('analysis-verified-status').textContent = `${count} / 5 Verified`;
+    }
+
+    function verifyAnalysisQ1() {
+      const val = parseFloat(document.getElementById('p3-q1-input').value);
+      const fb = document.getElementById('p3-q1-feedback');
+      fb.classList.remove('hidden');
+      if (Math.abs(val - 22930) < 0.01) {
+        fb.className = "mt-1.5 font-bold text-emerald-700";
+        fb.textContent = "Correct! Exactly $22,930.00 in income received.";
+        verifiedTracker.q1 = true;
+      } else {
+        fb.className = "mt-1.5 font-bold text-rose-700";
+        fb.textContent = "Incorrect. Target is $22,930.00.";
+      }
+      updateAnalysisScore();
+    }
+
+    function verifyAnalysisQ2() {
+      const val = parseFloat(document.getElementById('p3-q2-input').value);
+      const fb = document.getElementById('p3-q2-feedback');
+      fb.classList.remove('hidden');
+      if (Math.abs(val - 9535) < 0.01) {
+        fb.className = "mt-1.5 font-bold text-emerald-700";
+        fb.textContent = "Correct! Total expenses were $9,535.00.";
+        verifiedTracker.q2 = true;
+      } else {
+        fb.className = "mt-1.5 font-bold text-rose-700";
+        fb.textContent = "Incorrect. Target is $9,535.00.";
+      }
+      updateAnalysisScore();
+    }
+
+    function verifyAnalysisQ3() {
+      const val = parseFloat(document.getElementById('p3-q3-input').value);
+      const fb = document.getElementById('p3-q3-feedback');
+      fb.classList.remove('hidden');
+      if (Math.abs(val - 23395) < 0.01) {
+        fb.className = "mt-1.5 font-bold text-emerald-700";
+        fb.textContent = "Correct! Ending balance is $23,395.00.";
+        verifiedTracker.q3 = true;
+      } else {
+        fb.className = "mt-1.5 font-bold text-rose-700";
+        fb.textContent = "Incorrect. Formula: $10,000 + $22,930 - $9,535 = $23,395.00.";
+      }
+      updateAnalysisScore();
+    }
+
+    function verifyAnalysisQ4() {
+      const val = document.getElementById('p3-q4-select').value;
+      const fb = document.getElementById('p3-q4-feedback');
+      fb.classList.remove('hidden');
+      if (val === 'payroll') {
+        fb.className = "mt-1.5 font-bold text-emerald-700";
+        fb.textContent = "Correct! Payroll ($3,200) was the largest single expense.";
+        verifiedTracker.q4 = true;
+      } else {
+        fb.className = "mt-1.5 font-bold text-rose-700";
+        fb.textContent = "Review: Payroll at $3,200 represents the largest expenditure.";
+      }
+      updateAnalysisScore();
+    }
+
+    function saveAnalysisQ5() {
+      const text = document.getElementById('p3-q5-text').value.trim();
+      const words = text.split(/\s+/).filter(Boolean).length;
+      const fb = document.getElementById('p3-q5-feedback');
+      fb.classList.remove('hidden');
+      if (words >= 15) {
+        fb.className = "mt-1 font-bold text-emerald-700";
+        fb.textContent = `Saved (${words} words). Response recorded.`;
+        verifiedTracker.q5 = true;
+      } else {
+        fb.className = "mt-1 font-bold text-amber-700";
+        fb.textContent = `Please enter at least 15 words (currently ${words}).`;
+      }
+      updateAnalysisScore();
+    }
+
+    // --- PART 4: REFLECTION ---
+    function loadSampleReflection() {
+      document.getElementById('ref-topic-1').value = "In this simulation, I learned how cash inflows (debits) and outflows (credits) directly shift the cash balance. Tracking every transaction in real-time prevents errors from compounding.";
+      document.getElementById('ref-topic-2').value = "Bookkeeping ensures the clinic maintains sufficient working capital to purchase critical medical supplies, order vaccines, pay staff on time, and keep facilities compliant.";
+      document.getElementById('ref-topic-3').value = "Healthcare offices face delayed insurance remittances, unpredictable patient copay collections, and sudden regulatory equipment costs that challenge cash flow.";
+      document.getElementById('ref-topic-4').value = "Practice management software and Electronic Remittance Advice (ERA) automate ledger reconciliation and reduce manual data entry errors.";
+      showToast("Sample draft loaded", "info");
+    }
+
+    function downloadReflectionDoc() {
+      const content = `HEALTHY LIFE FAMILY CLINIC - REFLECTION\n`
+        + `Bookkeeper: ${currentStudentName}\n`
+        + `Date: ${new Date().toLocaleDateString()}\n\n`
+        + `A. Principles: ${document.getElementById('ref-topic-1').value}\n\n`
+        + `B. Operations: ${document.getElementById('ref-topic-2').value}\n\n`
+        + `C. Challenges: ${document.getElementById('ref-topic-3').value}\n\n`
+        + `D. Technology: ${document.getElementById('ref-topic-4').value}\n`;
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = "Healthy_Life_Clinic_Reflection.txt";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    // --- 20-QUESTION CERTIFICATION ASSESSMENT ---
+    const examQuestions = [
+      {
+        q: "When the clinic collects a $425 patient copay, how is Cash affected?",
+        options: ["Cash is Credited (decreased)", "Cash is Debited (increased)", "Cash is recorded as a liability", "No entry is recorded"],
+        correct: 1,
+        cat: "Debit & Credit",
+        rationale: "Cash is an Asset. Asset accounts increase via Debits."
+      },
+      {
+        q: "What was the beginning cash balance on April 1?",
+        options: ["$5,000", "$10,000", "$15,000", "$23,395"],
+        correct: 1,
+        cat: "April Ledger",
+        rationale: "April began with a starting cash balance of $10,000.00."
+      },
+      {
+        q: "When the clinic pays its $3,200 payroll, which entry reduces Cash?",
+        options: ["Debit Cash $3,200", "Credit Cash $3,200", "Credit Revenue $3,200", "Debit Accounts Payable"],
+        correct: 1,
+        cat: "Debit & Credit",
+        rationale: "Cash disbursements reduce the Cash account through a Credit."
+      },
+      {
+        q: "What continuous figure updates after every entry to reflect liquid cash?",
+        options: ["Gross Margin", "Running Balance", "Accounts Aging", "Depreciation"],
+        correct: 1,
+        cat: "Ledger",
+        rationale: "The running balance recalculates after each transaction."
+      },
+      {
+        q: "What was total income collected during April?",
+        options: ["$10,000.00", "$13,395.00", "$22,930.00", "$32,930.00"],
+        correct: 2,
+        cat: "Analysis",
+        rationale: "Sum of patient receipts and insurance reimbursements equals $22,930.00."
+      },
+      {
+        q: "What were total expenses disbursed in April?",
+        options: ["$9,535.00", "$11,500.00", "$13,395.00", "$23,395.00"],
+        correct: 0,
+        cat: "Analysis",
+        rationale: "Total expenditures for April equaled $9,535.00."
+      },
+      {
+        q: "What was the ending cash balance on April 30?",
+        options: ["$13,395.00", "$19,535.00", "$22,930.00", "$23,395.00"],
+        correct: 3,
+        cat: "Analysis",
+        rationale: "$10,000 (starting) + $22,930 (income) - $9,535 (expenses) = $23,395.00."
+      },
+      {
+        q: "Which expense had the largest budgetary impact in April?",
+        options: ["Rent ($1,500)", "Medical Equipment ($1,100)", "Payroll ($3,200)", "Utilities ($450)"],
+        correct: 2,
+        cat: "Analysis",
+        rationale: "Payroll at $3,200 was the largest single outflow (33.5% of total expenses)."
+      },
+      {
+        q: "In continuous bookkeeping, what serves as May 1's starting cash?",
+        options: ["Initial $10,000", "April's ending cash ($23,395)", "April total income", "$0"],
+        correct: 1,
+        cat: "Roll-Forward",
+        rationale: "Each month's closing cash balance rolls forward as the next month's opening balance."
+      },
+      {
+        q: "Why is recording the $35 bank fee on April 30 essential?",
+        options: ["It prevents bank statement reconciliation discrepancies", "It leads to bankruptcy", "The bank will cancel the account", "It cannot be expensed"],
+        correct: 0,
+        cat: "Reconciliation",
+        rationale: "Unrecorded bank fees prevent the clinic books from reconciling with the bank."
+      },
+      {
+        q: "What type of account is medical equipment ($1,100 on Apr 18)?",
+        options: ["Liability", "Capital Asset", "Expense only", "Revenue"],
+        correct: 1,
+        cat: "Classification",
+        rationale: "Medical equipment with durable utility is a clinic Asset."
+      },
+      {
+        q: "What was net cash flow for April (Income minus Expenses)?",
+        options: ["+$9,535.00", "+$10,000.00", "+$13,395.00", "+$23,395.00"],
+        correct: 2,
+        cat: "Analysis",
+        rationale: "$22,930.00 - $9,535.00 = +$13,395.00 net monthly cash flow."
+      },
+      {
+        q: "When an insurance payment of $2,900 is received, how does it affect running balance?",
+        options: ["Decreases balance", "Increases balance", "Leaves balance unchanged", "Reduces equity"],
+        correct: 1,
+        cat: "Mechanics",
+        rationale: "Receipts add cash to the running total."
+      },
+      {
+        q: "Which is a fixed operating overhead cost?",
+        options: ["Patient copay", "Facility lease rent", "Insurance wire", "Loan disbursement"],
+        correct: 1,
+        cat: "Budgeting",
+        rationale: "Facility lease rent ($1,500) is a recurring fixed operating overhead."
+      },
+      {
+        q: "What is the core accounting equation?",
+        options: ["Assets = Liabilities + Equity", "Assets + Liabilities = Income", "Revenue - Expenses = Liabilities", "Debits + Credits = Net Worth"],
+        correct: 0,
+        cat: "Theory",
+        rationale: "Assets must equal the sum of Liabilities and Owner's Equity."
+      },
+      {
+        q: "Why is recording vaccine reimbursements ($625 on Apr 13) critical?",
+        options: ["Vaccines spoil if unrecorded", "It maintains liquidity to reorder replacement inventory", "Insurance companies fine late entries", "It makes clinic non-profit"],
+        correct: 1,
+        cat: "Operations",
+        rationale: "Immunizations require significant upfront purchase; tracking reimbursements ensures working capital."
+      },
+      {
+        q: "How does practice management software improve bookkeeping?",
+        options: ["Eliminates bookkeepers", "Automates remittance postings and reduces transcription errors", "Increases copays", "Blocks audits"],
+        correct: 1,
+        cat: "Technology",
+        rationale: "Electronic remittance and automated reconciliations eliminate manual errors."
+      },
+      {
+        q: "At the end of the 6-month simulation (Sept 30), what was the clinic's cash position?",
+        options: ["$10,000.00", "$23,395.00", "$30,940.00", "$41,895.00"],
+        correct: 3,
+        cat: "6-Month Trajectory",
+        rationale: "Continuous positive operations brought ending cash to $41,895.00."
+      },
+      {
+        q: "What is the primary role of a clinic bookkeeping assistant?",
+        options: ["Prescribing medication", "Accurately recording financial transactions and reconciling balances", "Administering blood tests", "Authorizing legal settlements"],
+        correct: 1,
+        cat: "Scope",
+        rationale: "The assistant records inflows/outflows, maintains ledgers, and reconciles balances."
+      },
+      {
+        q: "Why is collecting copays at point of service advantageous?",
+        options: ["Provides immediate liquidity and avoids billing postage/collection costs", "Required before taking vitals", "Directly pays doctor malpractice", "Prevents insurance claims"],
+        correct: 0,
+        cat: "Revenue Cycle",
+        rationale: "Collecting at time of visit provides immediate cash and reduces uncollectible accounts."
+      }
+    ];
+
+    let userExamAnswers = new Array(examQuestions.length).fill(null);
+    let currentExamIdx = 0;
+
+    function renderQuizIndexPills() {
+      const container = document.getElementById('quiz-pills-grid');
+      container.innerHTML = '';
+      examQuestions.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        btn.id = `q-pill-${idx}`;
+        btn.onclick = () => renderExamQuestion(idx);
+        btn.className = `w-6 h-6 text-[10px] rounded font-bold border transition-all ${userExamAnswers[idx] !== null ? 'bg-emerald-800 text-white border-emerald-800' : 'bg-slate-100 text-slate-700 border-slate-300'}`;
+        btn.textContent = idx + 1;
+        container.appendChild(btn);
+      });
+    }
+
+    function renderExamQuestion(index) {
+      currentExamIdx = index;
+      const qData = examQuestions[index];
+
+      document.getElementById('current-q-index').textContent = index + 1;
+      document.getElementById('question-text').textContent = `${index + 1}. ${qData.q}`;
+
+      const box = document.getElementById('options-container');
+      box.innerHTML = '';
+
+      qData.options.forEach((opt, optIdx) => {
+        const isSelected = userExamAnswers[index] === optIdx;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => selectExamOption(index, optIdx);
+        btn.className = `w-full text-left p-2.5 rounded-lg border text-xs flex items-center gap-2.5 ${
+          isSelected 
+            ? 'bg-emerald-50 border-emerald-800 text-emerald-950 font-bold ring-1 ring-emerald-800' 
+            : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+        }`;
+
+        btn.innerHTML = `
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 font-bold ${
+            isSelected ? 'bg-emerald-800 text-white' : 'bg-slate-200 text-slate-700'
+          }">${String.fromCharCode(65 + optIdx)}</span>
+          <span>${opt}</span>
+        `;
+        box.appendChild(btn);
+      });
+
+      document.getElementById('prev-q-btn').disabled = index === 0;
+      const isLast = index === examQuestions.length - 1;
+      document.getElementById('next-q-btn').classList.toggle('hidden', isLast);
+      document.getElementById('submit-exam-btn').classList.toggle('hidden', !isLast);
+
+      document.querySelectorAll('#quiz-pills-grid button').forEach((pill, pIdx) => {
+        if (pIdx === index) pill.classList.add('ring-2', 'ring-emerald-700');
+        else pill.classList.remove('ring-2', 'ring-emerald-700');
+      });
+    }
+
+    function selectExamOption(qIdx, optIdx) {
+      userExamAnswers[qIdx] = optIdx;
+      renderExamQuestion(qIdx);
+
+      const count = userExamAnswers.filter(a => a !== null).length;
+      document.getElementById('quiz-answered-count').textContent = `${count} of 20 Answered`;
+
+      const pill = document.getElementById(`q-pill-${qIdx}`);
+      if (pill) {
+        pill.className = `w-6 h-6 text-[10px] rounded font-bold border bg-emerald-800 text-white border-emerald-800 ring-2 ring-emerald-700`;
+      }
+    }
+
+    function navigateExamQuestion(delta) {
+      const target = currentExamIdx + delta;
+      if (target >= 0 && target < examQuestions.length) renderExamQuestion(target);
+    }
+
+    function gradeExam() {
+      const unanswered = userExamAnswers.filter(a => a === null).length;
+      if (unanswered > 0) {
+        showToast(`Please answer remaining ${unanswered} question(s)`, 'warning');
+        return;
+      }
+
+      let correct = 0;
+      examQuestions.forEach((q, idx) => {
+        if (userExamAnswers[idx] === q.correct) correct++;
+      });
+
+      const pct = Math.round((correct / examQuestions.length) * 100);
+      const passed = pct >= 80;
+
+      document.getElementById('quiz-taking-container').classList.add('hidden');
+      const resContainer = document.getElementById('quiz-results-container');
+      resContainer.classList.remove('hidden');
+
+      const banner = document.getElementById('results-banner');
+      if (passed) {
+        completeSection(6);
+        banner.className = "p-5 rounded-xl border bg-emerald-50 border-emerald-300 text-emerald-950";
+        banner.innerHTML = `
+          <h3 class="text-base font-bold">Certification Earned: Score ${pct}% (${correct}/20)</h3>
+          <p class="text-xs text-slate-700 mt-1">You have demonstrated proficiency in medical practice cash accounting and running balances.</p>
+        `;
+        document.getElementById('certificate-printable-section').classList.remove('hidden');
+        document.getElementById('cert-score-display').textContent = `Passed with ${pct}%`;
+        document.getElementById('cert-date-display').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        updateCertificateName(currentStudentName);
+      } else {
+        banner.className = "p-5 rounded-xl border bg-rose-50 border-rose-300 text-rose-950";
+        banner.innerHTML = `
+          <h3 class="text-base font-bold">Score: ${pct}% (${correct}/20)</h3>
+          <p class="text-xs text-slate-700 mt-1">An 80% score (16/20) is required for certification.</p>
+          <button onclick="retakeExam()" class="mt-3 px-3 py-1.5 bg-rose-800 text-white rounded text-xs font-bold">Retake Exam</button>
+        `;
+        document.getElementById('certificate-printable-section').classList.add('hidden');
+      }
+
+      renderExamReview();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderExamReview() {
+      const box = document.getElementById('exam-review-container');
+      box.innerHTML = '';
+      examQuestions.forEach((q, idx) => {
+        const userAns = userExamAnswers[idx];
+        const isCorrect = userAns === q.correct;
+        const div = document.createElement('div');
+        div.className = `p-2.5 rounded border ${isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'}`;
+        div.innerHTML = `
+          <div class="flex justify-between items-start">
+            <span class="font-bold text-slate-800">${idx + 1}. ${q.q}</span>
+            <span class="text-[10px] font-bold ${isCorrect ? 'text-emerald-800' : 'text-rose-800'}">${isCorrect ? 'Correct' : 'Incorrect'}</span>
+          </div>
+          <div class="mt-1 text-slate-600">
+            <div>Your answer: <strong>${q.options[userAns]}</strong></div>
+            ${!isCorrect ? `<div class="text-emerald-800">Correct: <strong>${q.options[q.correct]}</strong></div>` : ''}
+            <div class="text-[11px] text-slate-500 mt-0.5">Rationale: ${q.rationale}</div>
+          </div>
+        `;
+        box.appendChild(div);
+      });
+    }
+
+    function retakeExam() {
+      userExamAnswers = new Array(examQuestions.length).fill(null);
+      document.getElementById('quiz-results-container').classList.add('hidden');
+      document.getElementById('quiz-taking-container').classList.remove('hidden');
+      renderQuizIndexPills();
+      renderExamQuestion(0);
+      document.getElementById('quiz-answered-count').textContent = '0 of 20 Answered';
+    }
+
+    function showToast(msg, type = 'info') {
+      const toast = document.getElementById('toast');
+      const icon = document.getElementById('toast-icon');
+      const messageEl = document.getElementById('toast-message');
+
+      messageEl.textContent = msg;
+      if (type === 'success') icon.className = 'fa-solid fa-circle-check text-emerald-400';
+      else if (type === 'warning') icon.className = 'fa-solid fa-triangle-exclamation text-amber-300';
+      else icon.className = 'fa-solid fa-circle-info text-sky-400';
+
+      toast.classList.remove('translate-y-20');
+      setTimeout(() => toast.classList.add('translate-y-20'), 3000);
+    }
+
+    function resetLabData() {
+      renderAprilLedger();
+      viewMonthLedger('apr');
+      renderQuizIndexPills();
+      renderExamQuestion(0);
+      selectPracticeMonth('apr');
+      showToast("Simulation reset", "info");
+    }
+
+    window.onload = function() {
+      renderAprilLedger();
+      viewMonthLedger('apr');
+      renderQuizIndexPills();
+      renderExamQuestion(0);
+      selectPracticeMonth('apr');
+    };
+  </script>
+</body>
+</html>
